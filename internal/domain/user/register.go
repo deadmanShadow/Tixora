@@ -1,9 +1,9 @@
 package user
 
 import (
-	"gotickets/internal/auth"
-	"gotickets/internal/config"
-	"gotickets/internal/middlewares"
+	"tixora/internal/auth"
+	"tixora/internal/config"
+	"tixora/internal/middlewares"
 
 	"github.com/labstack/echo/v5"
 

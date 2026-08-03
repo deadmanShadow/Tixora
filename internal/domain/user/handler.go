@@ -2,9 +2,9 @@ package user
 
 import (
 	"errors"
-	"gotickets/internal/domain/user/dto"
-	"gotickets/internal/httpresponse"
 	"net/http"
+	"tixora/internal/domain/user/dto"
+	"tixora/internal/httpresponse"
 
 	"github.com/labstack/echo/v5"
 )
