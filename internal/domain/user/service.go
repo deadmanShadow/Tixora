@@ -2,8 +2,8 @@ package user
 
 import (
 	"fmt"
-	"gotickets/internal/auth"
-	"gotickets/internal/domain/user/dto"
+	"tixora/internal/auth"
+	"tixora/internal/domain/user/dto"
 )
 
 var ErrInvalidCredentials = fmt.Errorf("invalid email or password")
