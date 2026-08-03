@@ -1,23 +1,16 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/labstack/echo/v5"
-	"github.com/labstack/echo/v5/middleware"
+	"tixora/internal/config"
+	"tixora/internal/server"
 )
 
 func main() {
-  e := echo.New()
+	// load environment variables
+	cfg := config.LoadEnv()
+	// connect to the database
+	db := config.ConnectDatabase(cfg)
+	// start the server
+	server.Start(db, cfg)
 
-  e.Use(middleware.RequestLogger())
-  e.Use(middleware.Recover())
-
-  e.GET("/", func(c *echo.Context) error {
-    return c.JSON(http.StatusOK, map[string]string{"message": "Hello World!"})
-  })
-
-  if err := e.Start(":8080"); err != nil {
-    e.Logger.Error("failed to start server", "error", err)
-  }
 }
