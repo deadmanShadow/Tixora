@@ -26,7 +26,7 @@ func (cv *CustomValidator) Validate(i any) error {
 	return nil
 }
 
-func Start(db *gorm.DB, cfg *config.Config) {
+func New(db *gorm.DB, cfg *config.Config) *echo.Echo {
 	db.AutoMigrate(&user.User{}, &event.Event{}, &booking.Booking{})
 
 	e := echo.New()
@@ -47,6 +47,11 @@ func Start(db *gorm.DB, cfg *config.Config) {
 	event.RegisterRoutes(e, db)
 	booking.RegisterRoutes(e, db, cfg)
 
+	return e
+}
+
+func Start(db *gorm.DB, cfg *config.Config) {
+	e := New(db, cfg)
 	port := fmt.Sprintf(":%s", cfg.Port)
 	if err := e.Start(port); err != nil {
 		e.Logger.Error("failed to start server", "error", err)
