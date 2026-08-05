@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #  Tixora - Event Ticketing & Booking RESTful API Backend
+=======
+# Tixora - Event Ticketing & Booking RESTful API Backend
+>>>>>>> d691c447c221446e43130eabf85af68a7aedae2d
 
 [![Go Version](https://img.shields.io/badge/Go-1.26+-00ADD8?style=flat-square&logo=go)](https://golang.org)
 [![Framework](https://img.shields.io/badge/Echo-v5.3.1-22C55E?style=flat-square)](https://echo.labstack.com)
@@ -34,7 +38,11 @@ It solves one of the hardest problems in ticket reservation software: **Overbook
   - Real-time total price calculation.
   - **Booking Cancellation & Ticket Restoration:** Cancelling a booking instantly restores tickets back to the available event pool inside a database transaction.
 
+<<<<<<< HEAD
 - ** Request Validation & Error Handling:**
+=======
+- **Request Validation & Error Handling:**
+>>>>>>> d691c447c221446e43130eabf85af68a7aedae2d
   - Built-in struct validation powered by `go-playground/validator/v10`.
   - Standardized JSON HTTP error responses (`httpresponse.ErrorResponse`).
   - Global Echo logging and CORS middleware enabled out of the box.
