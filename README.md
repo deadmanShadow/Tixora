@@ -1,4 +1,4 @@
-# 🎟️ Tixora - Event Ticketing & Booking RESTful API Backend
+#  Tixora - Event Ticketing & Booking RESTful API Backend
 
 [![Go Version](https://img.shields.io/badge/Go-1.26+-00ADD8?style=flat-square&logo=go)](https://golang.org)
 [![Framework](https://img.shields.io/badge/Echo-v5.3.1-22C55E?style=flat-square)](https://echo.labstack.com)
@@ -16,32 +16,32 @@ It solves one of the hardest problems in ticket reservation software: **Overbook
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
-- **🔐 User Management & Authentication:**
+- ** User Management & Authentication:**
   - Secure Registration & Login with Bcrypt password hashing.
   - Stateless JWT (JSON Web Tokens) authentication with configurable secret keys.
   - Protected endpoints secured by custom Echo middleware (`/me`, `/bookings`).
 
-- **📅 Event Lifecycle Management:**
+- ** Event Lifecycle Management:**
   - Create, view, update, and delete events (title, description, location, timing, pricing).
   - Dynamic ticket inventory tracking (`total_tickets` vs `available_tickets`).
   - Search and filter public events.
 
-- **🎟️ Transaction-Safe Booking System:**
+- ** Transaction-Safe Booking System:**
   - Race-condition proof ticket reservation engine using PostgreSQL row locking (`FOR UPDATE`).
   - Auto-generation of unique alphanumeric booking confirmation codes (`GT-<UUID>`).
   - Real-time total price calculation.
   - **Booking Cancellation & Ticket Restoration:** Cancelling a booking instantly restores tickets back to the available event pool inside a database transaction.
 
-- **🛡️ Request Validation & Error Handling:**
+- ** Request Validation & Error Handling:**
   - Built-in struct validation powered by `go-playground/validator/v10`.
   - Standardized JSON HTTP error responses (`httpresponse.ErrorResponse`).
   - Global Echo logging and CORS middleware enabled out of the box.
 
 ---
 
-## 🛠️ Tech Stack & Frameworks
+##  Tech Stack & Frameworks
 
 | Domain | Technology / Library | Purpose & Description |
 | :--- | :--- | :--- |
@@ -58,7 +58,7 @@ It solves one of the hardest problems in ticket reservation software: **Overbook
 ---
 
 
-## 🏗️ Project Architecture & Folder Structure
+##  Project Architecture & Folder Structure
 
 Tixora follows **Domain-Driven Design (DDD)** and **Clean Architecture** patterns:
 
@@ -84,7 +84,7 @@ Tixora/
 
 ---
 
-## 🗄️ Database Schema & Entities
+##  Database Schema & Entities
 
 The application automatically creates and migrates three main tables via GORM `AutoMigrate`:
 
@@ -130,7 +130,7 @@ erDiagram
 
 ---
 
-## 🔒 Concurrency & Race Condition Handling
+##  Concurrency & Race Condition Handling
 
 When multiple users attempt to purchase remaining tickets simultaneously, a naive implementation creates a race condition where available tickets drop below zero.
 
