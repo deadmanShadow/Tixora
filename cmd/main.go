@@ -2,8 +2,8 @@ package main
 
 import (
 	"log"
-	"tixora/internal/config"
-	"tixora/internal/server"
+	"tixora/pkg/config"
+	"tixora/pkg/server"
 )
 
 func main() {

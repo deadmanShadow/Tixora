@@ -2,7 +2,7 @@ package event
 
 import (
 	"time"
-	"tixora/internal/domain/event/dto"
+	"tixora/pkg/domain/event/dto"
 
 	"gorm.io/gorm"
 )

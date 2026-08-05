@@ -2,7 +2,7 @@ package booking
 
 import (
 	"errors"
-	"tixora/internal/domain/event"
+	"tixora/pkg/domain/event"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"

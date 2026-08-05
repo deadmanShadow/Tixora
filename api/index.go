@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"sync"
 
-	"tixora/internal/config"
-	"tixora/internal/server"
+	"tixora/pkg/config"
+	"tixora/pkg/server"
 )
 
 var (

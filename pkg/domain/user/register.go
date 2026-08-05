@@ -1,9 +1,9 @@
 package user
 
 import (
-	"tixora/internal/auth"
-	"tixora/internal/config"
-	"tixora/internal/middlewares"
+	"tixora/pkg/auth"
+	"tixora/pkg/config"
+	"tixora/pkg/middlewares"
 
 	"github.com/labstack/echo/v5"
 

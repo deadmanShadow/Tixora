@@ -4,9 +4,9 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-	"tixora/internal/domain/booking/dto"
-	"tixora/internal/domain/event"
-	"tixora/internal/httpresponse"
+	"tixora/pkg/domain/booking/dto"
+	"tixora/pkg/domain/event"
+	"tixora/pkg/httpresponse"
 
 	"github.com/labstack/echo/v5"
 )

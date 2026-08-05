@@ -3,10 +3,10 @@ package server
 import (
 	"fmt"
 	"net/http"
-	"tixora/internal/config"
-	"tixora/internal/domain/booking"
-	"tixora/internal/domain/event"
-	"tixora/internal/domain/user"
+	"tixora/pkg/config"
+	"tixora/pkg/domain/booking"
+	"tixora/pkg/domain/event"
+	"tixora/pkg/domain/user"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v5"

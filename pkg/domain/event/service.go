@@ -2,7 +2,7 @@ package event
 
 import (
 	"errors"
-	"tixora/internal/domain/event/dto"
+	"tixora/pkg/domain/event/dto"
 )
 
 var ErrInvalidTicketCount = errors.New("cannot reduce total tickets below booked ticket count")

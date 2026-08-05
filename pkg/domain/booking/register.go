@@ -1,10 +1,10 @@
 package booking
 
 import (
-	"tixora/internal/auth"
-	"tixora/internal/config"
-	"tixora/internal/domain/event"
-	"tixora/internal/middlewares"
+	"tixora/pkg/auth"
+	"tixora/pkg/config"
+	"tixora/pkg/domain/event"
+	"tixora/pkg/middlewares"
 
 	"github.com/labstack/echo/v5"
 	"gorm.io/gorm"

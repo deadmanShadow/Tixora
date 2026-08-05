@@ -3,7 +3,7 @@ package middlewares
 import (
 	"net/http"
 	"strings"
-	"tixora/internal/auth"
+	"tixora/pkg/auth"
 
 	"github.com/labstack/echo/v5"
 )

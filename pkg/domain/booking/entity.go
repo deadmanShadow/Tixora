@@ -1,7 +1,7 @@
 package booking
 
 import (
-	"tixora/internal/domain/booking/dto"
+	"tixora/pkg/domain/booking/dto"
 
 	"gorm.io/gorm"
 )

@@ -3,8 +3,8 @@ package user
 import (
 	"errors"
 	"net/http"
-	"tixora/internal/domain/user/dto"
-	"tixora/internal/httpresponse"
+	"tixora/pkg/domain/user/dto"
+	"tixora/pkg/httpresponse"
 
 	"github.com/labstack/echo/v5"
 )

@@ -1,8 +1,8 @@
 package booking
 
 import (
-	"tixora/internal/domain/booking/dto"
-	"tixora/internal/domain/event"
+	"tixora/pkg/domain/booking/dto"
+	"tixora/pkg/domain/event"
 
 	"github.com/google/uuid"
 )

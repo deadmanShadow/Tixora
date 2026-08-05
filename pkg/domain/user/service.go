@@ -2,8 +2,8 @@ package user
 
 import (
 	"fmt"
-	"tixora/internal/auth"
-	"tixora/internal/domain/user/dto"
+	"tixora/pkg/auth"
+	"tixora/pkg/domain/user/dto"
 )
 
 var ErrInvalidCredentials = fmt.Errorf("invalid email or password")
