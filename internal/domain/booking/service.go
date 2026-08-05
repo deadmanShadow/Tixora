@@ -38,11 +38,20 @@ func (s *service) GetMyBookings(userId uint) ([]*dto.Response, error) {
 		return nil, err
 	}
 
-	responses := make([]*dto.Response, len(bookings)) // Initialize the slice with the correct length
+	responses := make([]*dto.Response, len(bookings))
 
 	for i, b := range bookings {
 		responses[i] = b.ToResponse()
 	}
 
 	return responses, nil
+}
+
+func (s *service) CancelBooking(bookingId uint, userId uint) (*dto.Response, error) {
+	booking, err := s.bookingRepo.Cancel(bookingId, userId)
+	if err != nil {
+		return nil, err
+	}
+
+	return booking.ToResponse(), nil
 }

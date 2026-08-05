@@ -26,6 +26,13 @@ func eventErrorResponse(c *echo.Context, err error) error {
 		})
 	}
 
+	if errors.Is(err, ErrInvalidTicketCount) {
+		return c.JSON(http.StatusBadRequest, httpresponse.Error{
+			Code:    http.StatusBadRequest,
+			Message: err.Error(),
+		})
+	}
+
 	return c.JSON(http.StatusInternalServerError, httpresponse.Error{
 		Code:    http.StatusInternalServerError,
 		Message: "Something went wrong",
@@ -80,7 +87,7 @@ func (h *handler) GetEventsByID(c *echo.Context) error {
 		})
 	}
 
-	response, err := h.service.GetEventByID(uint(id)) // err => re-assign
+	response, err := h.service.GetEventByID(uint(id))
 
 	if err != nil {
 		return eventErrorResponse(c, err)
@@ -123,4 +130,23 @@ func (h *handler) UpdateEvent(c *echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, response)
+}
+
+func (h *handler) DeleteEvent(c *echo.Context) error {
+	eventId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, httpresponse.Error{
+			Code:    http.StatusBadRequest,
+			Message: "Invalid event id",
+			Details: err.Error(),
+		})
+	}
+
+	if err := h.service.DeleteEvent(uint(eventId)); err != nil {
+		return eventErrorResponse(c, err)
+	}
+
+	return c.JSON(http.StatusOK, map[string]string{
+		"message": "Event deleted successfully",
+	})
 }

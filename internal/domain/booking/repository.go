@@ -21,6 +21,7 @@ type Repository interface {
 	GetByUserID(userId uint) ([]*Booking, error)
 	Update(booking *Booking) error
 	CreateWithTicketUpdate(userId uint, eventId uint, quantity int) (*Booking, error)
+	Cancel(bookingId uint, userId uint) (*Booking, error)
 }
 
 type repository struct {
@@ -113,4 +114,51 @@ func (r *repository) CreateWithTicketUpdate(userId uint, eventId uint, quantity 
 
 	return &booking, nil
 
+}
+
+func (r *repository) Cancel(bookingId uint, userId uint) (*Booking, error) {
+	var booking Booking
+
+	err := r.db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Clauses(clause.Locking{Strength: "Update"}).First(&booking, bookingId).Error; err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				return ErrBookingNotFound
+			}
+			return err
+		}
+
+		if booking.UserID != userId {
+			return ErrForbiddenBookingAccess
+		}
+
+		if booking.Status == BookingCancelled {
+			return ErrBookingAlreadyCancelled
+		}
+
+		booking.Status = BookingCancelled
+		if err := tx.Save(&booking).Error; err != nil {
+			return err
+		}
+
+		var eventData event.Event
+		if err := tx.Clauses(clause.Locking{Strength: "Update"}).First(&eventData, booking.EventID).Error; err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				return event.ErrEventNotFound
+			}
+			return err
+		}
+
+		eventData.AvailableTickets += booking.Quantity
+		if err := tx.Save(&eventData).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &booking, nil
 }

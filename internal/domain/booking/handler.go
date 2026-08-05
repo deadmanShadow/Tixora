@@ -3,6 +3,7 @@ package booking
 import (
 	"errors"
 	"net/http"
+	"strconv"
 	"tixora/internal/domain/booking/dto"
 	"tixora/internal/domain/event"
 	"tixora/internal/httpresponse"
@@ -116,4 +117,30 @@ func (h *handler) GetMyBookings(c *echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, bookings)
+}
+
+func (h *handler) CancelBooking(c *echo.Context) error {
+	userId, ok := getCurrentUserID(c)
+	if !ok {
+		return c.JSON(http.StatusUnauthorized, httpresponse.Error{
+			Code:    http.StatusUnauthorized,
+			Message: "Unauthorized",
+		})
+	}
+
+	bookingId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, httpresponse.Error{
+			Code:    http.StatusBadRequest,
+			Message: "Invalid booking id",
+			Details: err.Error(),
+		})
+	}
+
+	response, err := h.service.CancelBooking(uint(bookingId), userId)
+	if err != nil {
+		return bookingErrorResponse(c, err)
+	}
+
+	return c.JSON(http.StatusOK, response)
 }

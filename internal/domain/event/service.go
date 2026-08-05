@@ -1,6 +1,11 @@
 package event
 
-import "tixora/internal/domain/event/dto"
+import (
+	"errors"
+	"tixora/internal/domain/event/dto"
+)
+
+var ErrInvalidTicketCount = errors.New("cannot reduce total tickets below booked ticket count")
 
 type service struct {
 	repo Repository
@@ -26,7 +31,6 @@ func (s *service) CreateEvent(req dto.CreateRequest) (*dto.Response, error) {
 	}
 
 	return event.ToResponse(), nil
-
 }
 
 func (s *service) GetEvents() ([]dto.Response, error) {
@@ -35,8 +39,6 @@ func (s *service) GetEvents() ([]dto.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	// responses := make([]dto.Response, len(events))
 
 	var responses []dto.Response
 
@@ -79,8 +81,17 @@ func (s *service) UpdateEvent(eventId uint, req dto.UpdateRequest) (*dto.Respons
 		event.StartsAt = req.StartsAt
 	}
 
-	if req.Price != 0 {
-		event.Price = req.Price
+	if req.Price != nil {
+		event.Price = *req.Price
+	}
+
+	if req.TotalTickets != nil {
+		diff := *req.TotalTickets - event.TotalTickets
+		if event.AvailableTickets+diff < 0 {
+			return nil, ErrInvalidTicketCount
+		}
+		event.TotalTickets = *req.TotalTickets
+		event.AvailableTickets += diff
 	}
 
 	if err := s.repo.Update(event); err != nil {
@@ -88,4 +99,8 @@ func (s *service) UpdateEvent(eventId uint, req dto.UpdateRequest) (*dto.Respons
 	}
 
 	return event.ToResponse(), nil
+}
+
+func (s *service) DeleteEvent(eventId uint) error {
+	return s.repo.Delete(eventId)
 }

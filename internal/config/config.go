@@ -17,12 +17,42 @@ func LoadEnv() *Config {
 
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Println("⚠️ .env file not found or couldn't be loaded, reading system environment variables")
+	}
+
+	dsn := os.Getenv("DSN")
+	if dsn == "" {
+		dsn = os.Getenv("Dsn")
+	}
+	if dsn == "" {
+		dsn = os.Getenv("DATABASE_URL")
+	}
+	if dsn == "" {
+		dsn = os.Getenv("POSTGRES_URL")
+	}
+
+	jwtSecret := os.Getenv("JWT_SECRET")
+	if jwtSecret == "" {
+		jwtSecret = os.Getenv("JwtSecret")
+	}
+	if jwtSecret == "" {
+		jwtSecret = os.Getenv("jwt_secret")
+	}
+	if jwtSecret == "" {
+		log.Println(" JWT_SECRET is not set in environment variables")
+	}
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = os.Getenv("Port")
+	}
+	if port == "" {
+		port = "8080"
 	}
 
 	return &Config{
-		Port:      os.Getenv("PORT"),
-		Dsn:       os.Getenv("DSN"),
-		JwtSecret: os.Getenv("JWT_SECRET"),
+		Port:      port,
+		Dsn:       dsn,
+		JwtSecret: jwtSecret,
 	}
 }
