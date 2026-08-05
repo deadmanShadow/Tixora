@@ -53,7 +53,6 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
@@ -61,14 +60,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check required Vercel secrets
+        run: |
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ]; then
+            echo "❌ ERROR: VERCEL_TOKEN secret is missing in GitHub Repository Secrets!"
+            echo "Go to: Repo Settings -> Secrets and variables -> Actions -> Add secret 'VERCEL_TOKEN'"
+            exit 1
+          fi
+          if [ -z "${{ secrets.VERCEL_ORG_ID }}" ]; then
+            echo "❌ ERROR: VERCEL_ORG_ID secret is missing in GitHub Repository Secrets!"
+            echo "Go to: Repo Settings -> Secrets and variables -> Actions -> Add secret 'VERCEL_ORG_ID'"
+            exit 1
+          fi
+          if [ -z "${{ secrets.VERCEL_PROJECT_ID }}" ]; then
+            echo "❌ ERROR: VERCEL_PROJECT_ID secret is missing in GitHub Repository Secrets!"
+            echo "Go to: Repo Settings -> Secrets and variables -> Actions -> Add secret 'VERCEL_PROJECT_ID'"
+            exit 1
+          fi
+
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+        run: vercel pull --yes --environment=production --token="${{ secrets.VERCEL_TOKEN }}"
 
       - name: Build Project Artifacts
-        run: vercel build --prod --token=$VERCEL_TOKEN
+        run: vercel build --prod --token="${{ secrets.VERCEL_TOKEN }}"
 
       - name: Deploy Project Artifacts to Vercel Production
-        run: vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+        run: vercel deploy --prebuilt --prod --token="${{ secrets.VERCEL_TOKEN }}"
